@@ -1,6 +1,8 @@
 import 'package:ejemplo/models/employees.dart';
 import 'package:flutter/material.dart';
 
+import 'detailsEmployed.dart';
+
 class DetailsListEmployees extends StatelessWidget {
   Employess _employess;
   int id;
@@ -9,13 +11,17 @@ class DetailsListEmployees extends StatelessWidget {
   DetailsListEmployees(this._employess, {this.alTerminar, this.id});
   int colordark = 0xff4ab3f5;
   int colorligth = 0xff000000;
-
+TextEditingController controller = new TextEditingController();
   @override
+  void dispose() {
+    controller.dispose();
+    //super.dispose();
+  }
   Widget build(BuildContext context) {
     return Stack(alignment: Alignment.centerLeft, children: <Widget>[
       GestureDetector(
         child: SizedBox(
-          height: 120,
+          height: 150,
           child: Card(
             elevation: 15,
             shape: RoundedRectangleBorder(
@@ -27,21 +33,18 @@ class DetailsListEmployees extends StatelessWidget {
                 //  crossAxisAlignment: CrossAxisAlignment.start,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
+              
                   Container(
-                    margin: EdgeInsets.only(left: 70, top: 20),
+                    margin: EdgeInsets.all(8),
                     child: Text(
                       _employess.name.toUpperCase(),
                       style: TextStyle(
-                        fontSize: 12,
+                        fontSize: 13,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
                   ),
                   Container(
-                    height: 10,
-                  ),
-                  Container(
-                    margin: EdgeInsets.only(left: 70, top: 20),
                     child: Text(
                       _employess.position.toUpperCase(),
                       style: TextStyle(
@@ -50,20 +53,27 @@ class DetailsListEmployees extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    margin: EdgeInsets.only(left: 70, top: 20),
-                    child: Text(
-                      _employess.wage.toString(),
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.bold,
+                  Row(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Icon(
+                        Icons.monetization_on,
+                        size: 20,
                       ),
-                    ),
+                      Container(
+                        child: Text(
+                          _employess.wage.toString(),
+                          style: TextStyle(
+                            fontSize: 12,
+                            fontWeight: FontWeight.bold,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   Container(
-                    margin: EdgeInsets.only(left: 70, bottom: 30),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
                       mainAxisAlignment: MainAxisAlignment.center,
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: <Widget>[
@@ -95,11 +105,15 @@ class DetailsListEmployees extends StatelessWidget {
                 ]),
           ),
         ),
+        onTap: () {
+           Navigator.push( 
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailsEmployed(_employess)),
+                  );
+        },
       ),
     ]);
   }
 }
 
-_onloanding() {
-  return CircularProgressIndicator();
-}

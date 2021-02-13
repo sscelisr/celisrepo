@@ -12,10 +12,12 @@ class EmployeesProvider {
     var url = '$URL_BASE';
     var response = await http.get(url);
 
-     Map<String, dynamic> responseData = json.decode(response.body);
-     List gruposJson = responseData["data"];
-    print(gruposJson);
+    Map responseData = json.decode(response.body);
 
-    return gruposJson;
+    List gruposJson = responseData["employees"];
+    List<Employess> grupos =
+        gruposJson.map((grupoJson) => Employess.fromJson(grupoJson)).toList();
+
+    return grupos;
   }
 }
